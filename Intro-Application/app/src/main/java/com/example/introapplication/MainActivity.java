@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,5 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Button Click = ", count+"");
 //        TextView text = (TextView)findViewById((R.id.countText));
 //        text.setText(count);
+        EditText number = (EditText)findViewById(R.id.editText);
+        Log.i("Number -",number.getText().toString());
     }
 }
