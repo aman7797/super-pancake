@@ -324,3 +324,19 @@ console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6], 3));
 
 // Output
 // [ [ 0, 1, 2 ], [ 3, 4, 5 ], [ 6 ] ]
+
+// 18. Timestamp to Require timestamp
+
+function _dateInIST(dbDate){ 
+  var offset = 1;
+  var date = new Date(dbDate); 
+  var utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),date.getUTCHours()+11, date.getUTCMinutes(), date.getUTCSeconds());
+  clientDate = new Date(utc + offset);
+  dateInIST=JSON.stringify(clientDate);
+  return dateInIST;
+}
+
+console.log(_dateInIST("2019-07-01 00:02:20"));
+
+// Output
+// "2019-07-01T05:32:20.001Z"
