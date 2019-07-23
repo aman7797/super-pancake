@@ -283,8 +283,44 @@ The arguments ["hello", "hey"] should return false because the string "hello" do
 
 Lastly, ["Alien", "line"], should return true because all of the letters in "line" are present in "Alien". 
  */
-function mutation(arr) {
-    return arr;
+function mutation(arr) { 
+  let toCheckWith=arr[0].toLowerCase();
+  let toCheck=arr[1].toLowerCase().split("");
+  let flag=false;
+  for(let j=0;j<toCheck.length;j++){
+    if(toCheckWith.includes(toCheck[j])){
+      flag=true;
+    }else{
+      flag=false;
+      break;
+    }
   }
-  
-console.log(mutation(["hello", "hey"]));
+  return flag;
+}  
+console.log(mutation(["floor", "for"]));
+
+// Output
+// true
+
+// 17. Chunky Monkey
+/*
+Write a function that splits an array (first argument) into groups the length of size (second argument) and returns them as a two-dimensional array. */
+function chunkArrayInGroups(arr, size) {
+  let newArr=[],insideArr=[]
+  let noOfArray=arr.length/size
+  for(let j=0;j<noOfArray;j++){
+    for(let i=0;i<size;i++){
+      let elem=arr.shift()
+      if(typeof elem !== 'undefined'){
+        insideArr.push(elem)
+      }
+    }
+    newArr.push(insideArr);
+    insideArr=[];
+  }
+  return newArr;
+}
+console.log(chunkArrayInGroups([0, 1, 2, 3, 4, 5, 6], 3));
+
+// Output
+// [ [ 0, 1, 2 ], [ 3, 4, 5 ], [ 6 ] ]
