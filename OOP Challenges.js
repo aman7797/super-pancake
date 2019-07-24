@@ -365,7 +365,7 @@ console.log(duck)
 // Bird {}
 
 // 21. Add Methods After Inheritance
-/**
+/*
  * Add all necessary code so the Dog object inherits from Animal and the Dog's prototype constructor is set to Dog. Then add a bark() method to the Dog object so that beagle can both eat() and bark(). The bark() method should print "Woof!" to the console.
  */
 function Animal() { }
@@ -396,3 +396,90 @@ beagle.bark();
 /**
  * Override the fly() method for Penguin so that it returns "Alas, this is a flightless bird."
  */
+function Bird() { }
+
+Bird.prototype.fly = function() { return "I am flying!"; };
+
+function Penguin() { }
+Penguin.prototype = Object.create(Bird.prototype);
+Penguin.prototype.constructor = Penguin;
+
+Penguin.prototype.fly = function() {
+    return  "Alas, this is a flightless bird.";
+};
+
+var penguin = new Penguin();
+console.log(penguin.fly());
+
+// Output
+// Alas, this is a flightless bird.
+
+// 23. Use a Mixin to Add Common Behavior Between Unrelated Objects
+// Create a mixin named glideMixin that defines a method named glide. Then use the glideMixin to give both bird and boat the ability to glide.
+var bird = {
+  name: "Donald",
+  numLegs: 2
+};
+
+var boat = {
+  name: "Warrior",
+  type: "race-boat"
+};
+
+// Add your code below this line
+var glideMixin = function(obj) {
+    obj.glide = function() {
+        console.log("Gliding!");
+    }
+};
+glideMixin(bird);
+glideMixin(boat);
+
+// 24.Use Closure to Protect Properties Within an Object from Being Modified Externally
+/**
+ * Change how weight is declared in the Bird function so it is a private variable. Then, create a method getWeight that returns the value of weight.
+ */
+function Bird() {
+  var weight = 15;
+  this.getWeight = function() {
+    return weight;
+  };
+}
+
+// 25. Understand the Immediately Invoked Function Expression (IIFE)
+/**
+ * Rewrite the function makeNest and remove its call so instead it's an anonymous immediately invoked function expression (IIFE).
+ */
+
+ (function() {
+  console.log("A cozy nest is ready");
+})();
+
+// Output
+// A cozy nest is ready
+
+// 26. Use an IIFE to Create a Module
+/**
+ * Create a module named funModule to wrap the two mixins isCuteMixin and singMixin. funModule should return an object.
+ */
+var funModule = (function () {
+  return {
+    isCuteMixin: function (obj) {
+      obj.isCute = function() {
+      return true;
+      };
+    },
+    singMixin: function(obj) {
+      obj.sing = function() {
+      console.log("Singing to an awesome tune");
+      };
+    }
+  }
+}) ();
+
+console.log(funModule);
+
+// Output
+// { isCuteMixin: [Function: isCuteMixin],
+//   singMixin: [Function: singMixin] }
+
