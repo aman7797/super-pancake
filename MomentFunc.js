@@ -12,17 +12,14 @@ const moment = require('moment-timezone');
 // const moment = require('moment');
 
 
-var dateB = moment('2014-12-12 00:02:12').add(5, 'hours').add(30, 'minutes');
-console.log(dateB)
+// var dateB = moment('2014-12-12 00:02:12').add(5, 'hours').add(30, 'minutes');
+// console.log(dateB)
 
 
-var dateC = moment('2014-12-12 00:02:12').add(19800000, 'milliseconds')
-console.log(dateC)
+// var dateC = moment('2014-12-12 00:02:12').add(19800000, 'milliseconds')
 
-//19800000 //this is 5:30 in milliseconds
-
-
-// var dateC = moment('2014-12-12 00:02:12').tz("Asia/Culcutta").format();
+var dateC = moment.tz('2014-12-12 00:02:12',"Asia/Kolkata").format();
+console.log(dateC.toString())
 // var zone = "America/Los_Angeles";
 // var a = moment.tz('2013-06-01T18:34:00+05:30').format();
 // console.log(a)
