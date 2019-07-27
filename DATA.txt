@@ -1,0 +1,7 @@
+ if(currentTimeMillis % 10 < 2) {
+    setGatewayPriority(['PAYU', 'PAYTM'])
+}else {
+    setGatewayPriority(['PAYTM', 'PAYU'])  
+}
+
+k7SfhnZVwJ5R5icV

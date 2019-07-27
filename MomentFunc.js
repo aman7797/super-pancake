@@ -24,3 +24,15 @@ console.log(dateC.toString())
 // var a = moment.tz('2013-06-01T18:34:00+05:30').format();
 // console.log(a)
 
+
+function dateInIST(dbDate){
+    var offset = 1;
+    var date = new Date(dbDate); 
+    var utc =  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+    date.getUTCHours()+11, date.getUTCMinutes(), date.getUTCSeconds());
+    clientDate = new Date(utc + offset);
+    dateInIST=JSON.stringify(clientDate);
+    return dateInIST;
+}
+  
+console.log(dateInIST("2019-07-01 18:34:09"))
