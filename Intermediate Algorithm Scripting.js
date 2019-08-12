@@ -223,13 +223,102 @@
 // If all letters are present in the range, return undefined.
 //  */
 
-function fearNotLetter(str) {
-  let startASCI = str.charCodeAt(0);
-  let endASCI = str.charCodeAt(str.length-1);
-  for(let i=startASCI;i<endASCI;i++){
+// function fearNotLetter(str) {
+//   var startASCI = str.charCodeAt(0);
+//   console.log("start at" + startASCI)
+//   for(var i=0;i<str.length;i++){
+//     console.log("in for loop char :-" + str[i] + "  ASCI  " + startASCI)
+//     if(str.charCodeAt(i) != startASCI){
+//       return String.fromCharCode(startASCI)
+//     }
+//     startASCI++;
+//   }
+//   return undefined;
+// }
+// console.log(fearNotLetter("abde"));
 
-  }
+// // Output
+// // c
 
+// // 10. Sorted Union
+// /*
+//  *Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+
+// In other words, all values present from all arrays should be included in their original order, but with no duplicates in the final array.
+
+// The unique numbers should be sorted by their original order, but the final array should not be sorted in numerical order.
+
+// Check the assertion tests for examples. 
+//  */
+
+// function uniteUnique(arr) {
+//   var args = [...arguments];
+//   var finalArray = [];
+//   for(var i=0;i<args.length;i++){
+//     var arr = args[i];
+//     console.log("array " +i+ "::-" + arr);
+//     for(var j=0;j<arr.length;j++){
+//       console.log(arr[j]);
+//       if(!finalArray.includes(arr[j])){
+//         finalArray.push(arr[j]);
+//       }
+//       console.log("final array ::-" + finalArray)
+//     }
+//   }
+//   return finalArray;
+// }
+
+// console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]));
+
+// // Output
+// // [ 1, 3, 2, 5, 4 ]
+
+// // 11. Convert HTML Entities
+// /*
+//  *Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities. 
+//  */
+
+// function convertHTML(str) {
+//   var output = str.split('');
+//   for (var i = 0; i < output.length; i++) {
+//     switch (output[i]) {
+//       case '<':
+//         output[i] = '&lt;';
+//         break;
+//       case '&':
+//         output[i] = '&amp;';
+//         break;
+//       case '>':
+//         output[i] = '&gt;';
+//         break;
+//       case '"':
+//         output[i] = '&quot;';
+//         break;
+//       case "'":
+//         output[i] = "&apos;";
+//         break;
+//     }
+//   }
+//   output = output.join('');
+//   return output;
+// }
+
+// console.log(convertHTML("Dolce & Gabbana"));
+
+// // Output
+// // Dolce &amp; Gabbana
+
+// 12. Sum All Odd Fibonacci Numbers
+/**
+ * Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num.
+
+The first two numbers in the Fibonacci sequence are 1 and 1. Every additional number in the sequence is the sum of the two previous numbers. The first six numbers of the Fibonacci sequence are 1, 1, 2, 3, 5 and 8.
+
+For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than or equal to 10 are 1, 1, 3, and 5.
+ */
+
+function sumFibs(num) {
+  return num;
 }
 
-fearNotLetter("abce");
+console.log(sumFibs(4));
