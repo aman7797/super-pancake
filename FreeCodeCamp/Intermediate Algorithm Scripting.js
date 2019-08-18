@@ -406,3 +406,48 @@ console.log(smallestCommons([1,5]));
 
 //Output
 // Remaining
+
+// 15. Drop It
+/**
+ * Given the array arr, iterate through and remove each element starting from the first element (the 0 index) until the function func returns true when the iterated element is passed through it.
+
+Then return the rest of the array once the condition is satisfied, otherwise, arr should be returned as an empty array.
+ */
+
+ function dropElements(arr, func) {
+
+  var loop = arr.length;
+  for (var i = 0; i < loop; i++) {
+    if (func(arr[0])) {
+      break;
+    } else {
+      arr.shift();
+    }
+  }
+  return arr;
+}
+
+console.log(dropElements([1, 2, 3, 4], function(n) {return n >= 3;}))
+
+// Output
+// [ 3, 4 ]
+
+// 16. Steamroller
+/**
+ * Flatten a nested array. You must account for varying levels of nesting
+ */
+
+function steamrollArray(arr) {
+  var output = [].concat(...arr);
+  console.log(output)
+  //Array.isArray() method determines whether the passed value is an Array.
+  //Array.isArray([1, 2, 3]);  // true
+  //Array.isArray({foo: 123}); // false
+  //output.some check is the test is passed or not 
+  return output.some(Array.isArray) ? steamrollArray(output) : output;
+}
+
+console.log(steamrollArray([1, [2], [3, [[4]]]]));
+
+//Output
+// [ 1, 2, 3, 4 ]
