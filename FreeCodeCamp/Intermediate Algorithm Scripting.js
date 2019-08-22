@@ -493,17 +493,18 @@
 // Remember, you can access object properties through either dot notation or [] notation.
 //  */
 
-function truthCheck(collection, pre) {
-  // every() method tests whether all elements in the array pass the test implemented by the provided function.
-  return collection.every(function (objectInCollection) {
-    //hasOwnProperty() method returns a boolean indicating whether the object has the specified property
-    return objectInCollection.hasOwnProperty(pre) && Boolean(objectInCollection[pre]);
-  });
-}
+// function truthCheck(collection, pre) {
+//   // every() method tests whether all elements in the array pass the test implemented by the provided function.
+//   return collection.every(function (objectInCollection) {
+//     //hasOwnProperty() method returns a boolean indicating whether the object has the specified property
+//     return objectInCollection.hasOwnProperty(pre) && Boolean(objectInCollection[pre]);
+//   });
+// }
 
-console.log(truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex"));
+// console.log(truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex"));
 
-// Output
+// // Output
+// // true
 
 // //  19. Arguments Optional
 // /**
@@ -520,6 +521,25 @@ console.log(truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy"
 // If either argument isn't a valid number, return undefined.
 //  */
 
+// function addTogether() {
+//   var output = Array.from(arguments);
+//   console.log(output);
+//   // condition will check if any of the argument is a number or not in the array
+//   // output.some(n => typeof n !== 'number');
+//   return output.some(n => typeof n !== 'number')?
+//     undefined:
+//     output.length > 1 ?
+//       output.reduce((sum, n) => sum += n, 0):
+//         (n) => typeof n === "number" ? 
+//           n + args[0]:
+//           undefined;
+// }
+
+// console.log(addTogether(2)([3]));
+
+// //Output
+// //undefined
+
 // // 20. Make a Person
 // /**
 //  * Fill in the object constructor with the following methods below:
@@ -531,6 +551,58 @@ console.log(truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy"
 
 // These methods must be the only available means of interacting with the object.
 //  */
+
+var Person = function(firstAndLast) {
+  
+  var firstAndLast = firstAndLast;
+
+  this.getFullName = function() {
+    return firstAndLast;
+  };
+
+  this.getFirstName = function(){
+    return firstAndLast.split(" ")[0];
+  }
+
+  this.getLastName = function(){
+    return firstAndLast.split(" ")[1];
+  }
+
+  this.setFirstName = function(first){
+    // console.log(firstAndLast);    
+    firstAndLast = firstAndLast.split(" ");
+    // console.log(firstAndLast);
+    firstAndLast[0] = first;
+    // console.log(firstAndLast);
+    return firstAndLast.join(" ");
+  }
+
+  this.setLastName = function(last){
+    // console.log(firstAndLast);    
+    firstAndLast = firstAndLast.split(" ");
+    // console.log(firstAndLast);
+    firstAndLast[1] = last;
+    // console.log(firstAndLast);
+    return firstAndLast.join(" ");
+  }
+
+  this.setFullName = function(name){
+    console.log(firstAndLast);    ;
+    firstAndLast = name;
+  }
+
+  return firstAndLast;
+};
+
+var bob = new Person('Bob Ross');
+// console.log(bob.getFullName());
+// console.log(bob.getFirstName());
+// console.log(bob.getLastName());
+console.log(bob.setFullName("Aman Lalpuria"));
+console.log(bob.getFullName());
+console.log(bob.getFirstName());
+
+
 
 // // 21. Map the Debris
 // /**
