@@ -395,13 +395,31 @@ The range will be an array of two numbers that will not necessarily be in numeri
 For example, if given 1 and 3, find the smallest common multiple of both 1 and 3 that is also evenly divisible by all numbers between 1 and 3. The answer here would be 6.
  */
 function smallestCommons(arr) {
-  return arr;
+  var range = [];
+  for (var i = Math.max(arr[0], arr[1]); i >= Math.min(arr[0], arr[1]); i--) {
+  range.push(i);
+  }
+
+  // can use reduce() in place of this block
+  var lcm = range[0];
+  for (i = 1; i < range.length; i++) {
+  var GCD = gcd(lcm, range[i]);
+  lcm = (lcm * range[i]) / GCD;
+  }
+  return lcm;
+
+  function gcd(x, y) {    
+  if (y === 0)
+      return x;
+  else
+      return gcd(y, x%y);
+  }
 }
 
 console.log(smallestCommons([1,5]));
 
 //Output
-// Remaining
+// 60
 
 // 15. Drop It
 /**
