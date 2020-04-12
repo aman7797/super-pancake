@@ -42,7 +42,7 @@ waxOn = x * 5
 triple :: Integer -> Integer
 triple x = x * 3
 
-waxOff x = triple x
+waxOff x = triple x 
 
 main = do
     print(headCode1)
