@@ -101,3 +101,51 @@ capitalAll (x:xa) = toUpper x : capitalAll xa
 returnFirst :: String -> Maybe Char
 returnFirst [] = Nothing
 returnFirst x = Just $ toUpper $ head x 
+
+myOr :: [Bool] -> Bool
+myOr []          = False
+myOr (True:_)    = True
+myOr (False:xs)  = myOr xs
+
+
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny f input = myOr output
+    where output = map f input
+
+myElem :: Eq a => a -> [a] -> Bool
+myElem _ [] = False
+myElem toFind listInput = myAny (toFind ==) listInput
+
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse input = last input : myReverse (init input)
+
+squish :: [[a]] -> [a]
+squish [] = []
+squish (x:xa) = x ++ squish xa
+
+-- we not using appender : as both are list, so we are concating the list together
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap _ [] = []
+squishMap f (x:xa) = f x ++ (squishMap f xa)
+
+squishAgain :: [[a]] -> [a]
+squishAgain [] = []
+squishAgain (x:xa) = undefined 
+
+
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy _ []        = error "Gotta give me something!"
+myMaximumBy _ (x:[])    = x
+myMaximumBy f (x:xa)
+  | f x y == GT         = x
+  | otherwise           = y
+  where y = myMaximumBy f xa
+
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy _ []        = error "Gotta give me something!"
+myMinimumBy _ (x:[])    = x
+myMinimumBy f (x:xa)
+  | f x y == LT         = x
+  | otherwise           = y
+  where y = myMaximumBy f xa
