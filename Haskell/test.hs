@@ -55,3 +55,66 @@ fibsFactorial input = fibsFactorials !! input
   where
     fibsFactorials :: [Integer]
     fibsFactorials = scanl (*) 1 [1..]
+
+stops :: String
+stops = "pbtdkg"
+
+vowels :: String
+vowels = "aeiou"
+
+stopvowelstop ::[(Char, Char, Char)]
+stopvowelstop = [(s1, v, s2) | s1 <- stops, v <- vowels, s2 <- stops]
+
+stopvowelstopPCombo ::[(Char, Char, Char)]
+stopvowelstopPCombo = [(s1, v, s2) | s1 <- stops, v <- vowels, s2 <- stops, s1 == 'p']
+
+nouns :: [String]
+nouns = ["he","she","it"]
+
+verbs :: [String]
+verbs = ["loves","like","hate"]
+
+nounVerbNoun ::[(String, String, String)]
+nounVerbNoun = [(s1, v, s2) | s1 <- nouns, v <- verbs, s2 <- nouns]
+
+seekritFunc x = div (sum (map length (words x))) (length (words x))
+
+seekritFunc' :: String -> Double
+seekritFunc' x = (/) (fromIntegral $ sum (map length (words x))) (fromIntegral $ length (words x))
+
+myOr :: [Bool] -> Bool
+myOr input = foldr (||) True input
+
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny f = foldr (\a b -> f a || b) False
+
+myElemAny :: Eq a => a -> [a] -> Bool
+myElemAny e = any (== e)
+
+myReverse :: [a] -> [a]
+myReverse = foldl (flip (:)) []
+
+myMap :: (a -> b) -> [a] -> [b]
+myMap f = foldr ((:) . f) []
+
+myFilter :: (a -> Bool) -> [a] -> [a]
+myFilter f = foldr (\x xs -> if f x then x:xs else xs) []
+
+squish :: [[a]] -> [a]
+squish = foldr (++) []
+
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f = foldr ((++) . f) []
+
+squishAgain :: [[a]] -> [a]
+squishAgain = squishMap id
+
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy _ [] = undefined
+myMaximumBy f (x:xs) = foldl compareFn x xs
+  where compareFn b x' = if f x' b == GT then x' else b
+
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy _ [] = undefined
+myMinimumBy f (x:xs) = foldl compareFn x xs
+  where compareFn b x' = if f x' b == LT then x' else b
