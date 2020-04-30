@@ -32,12 +32,11 @@ cipher encryptOrDecrypt (x:xa) count = encode encryptOrDecrypt x count : cipher 
 
 charPosition :: Char -> Int
 charPosition character = position
-    where 
+    where
         position = head output
-        putStrLn ("Its Here")
-        output = [n | (l, n) <- zip ['a'..'z'] [1..], l == character]
+        output = [n | (l, n) <- zip ['a'..'z'] [1..], l == toLower character]
 
 vigenèreCipher :: Cipher -> [Char] -> [Char] -> [Char]
 vigenèreCipher _ [] _ = []
 vigenèreCipher _ input [] = input
-vigenèreCipher encryptOrDecrypt (x:xa) (y:ya) = encode encryptOrDecrypt x (charPosition y) : vigenèreCipher encryptOrDecrypt xa ya
+vigenèreCipher encryptOrDecrypt (x:xa) (y:ya) = encode encryptOrDecrypt x (charPosition y - 1) : vigenèreCipher encryptOrDecrypt xa ya
