@@ -1,5 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 
+import Data.Char
+
 class TooMany a where
   tooMany :: a -> Bool
 
@@ -179,6 +181,35 @@ foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
 foldTree _ input Leaf = input
 foldTree f input bt = foldr f input $ postorder bt
 
+isSubsequenceOf :: (Eq a) => [a] -> [a] -> Bool
+isSubsequenceOf _ [] = False
+isSubsequenceOf [] _ = True
+isSubsequenceOf firstInput@(x:xa) secondInput@(y:ya)
+  | x == y = isSubsequenceOf xa secondInput
+  | otherwise = isSubsequenceOf firstInput ya
+
+capitalizeWords :: String -> [(String, String)]
+capitalizeWords = map capitalizeWord' . words
+  where
+    capitalizeWord' :: String -> (String, String)
+    capitalizeWord' []          = ([],[])
+    capitalizeWord' word@(w:ws) = (word, (toUpper w):ws)
+
+capitalizeWord :: String -> String
+capitalizeWord [] = []
+capitalizeWord (x:xa)= (toUpper x) : xa
+
+capitalizeParagraph :: String -> String
+capitalizeParagraph [] = []
+capitalizeParagraph input = concat $ map capitalizeWord $ myWords input 
+
+-- output ["aman","lalpuria"]
+-- can retrive using map
+myWords :: [Char] -> [[Char]]
+myWords input
+    | input == [] = []
+    | otherwise = (takeWhile (/=' ') input ++ " "):(myWords $ (dropWhile (==' ') . dropWhile (/=' ')) input)
+
 main :: IO ()
 main = do
   testPreorder
@@ -186,36 +217,12 @@ main = do
   testPostorder
   testFoldTree
 
-newtype VKeyword  = VKeyword String deriving Show
-newtype VPlain    = VPlain  { unVPlain :: String } deriving (Show, Eq)
-newtype VCipher   = VCipher { unVCipher :: String } deriving Show
+data Expr = Lit Integer | Add Expr Expr deriving Show
 
-ceaserShift :: Int -> Char -> Char
-ceaserShift i c
-  | elem c ['0'..'9'] = shift (ord '0') (length ['0'..'9']) i c
-  | elem c ['a'..'z'] = shift (ord 'a') (length ['a'..'z']) i c
-  | elem c ['A'..'Z'] = shift (ord 'A') (length ['A'..'Z']) i c
-  | otherwise         = c
-  where
-    shift :: Int -- Base Int
-          -> Int -- Length of character set
-          -> Int -- Right shift amount
-          -> Char -- Source character to shift
-          -> Char -- Output character
-    shift b l i' c' = chr (b + (((ord c') - b) + (i' `mod` l)) `mod` l)
-    
-vEncode :: VKeyword -> VPlain -> VCipher
-vEncode (VKeyword []) (VPlain plain)  = VCipher plain
-vEncode (VKeyword key) (VPlain plain) = VCipher (vEncode' key plain)
-  where
-    vEncode' _      []     = []
-    vEncode' []     plain' = vEncode' key plain'
-    vEncode' (k:ks) (p:ps) = (ceaserShift (ord k) p):(vEncode' ks ps)
+eval :: Expr -> Integer
+eval (Lit a) = a
+eval (Add a b) = (+) (eval a) (eval b)
 
-vDecode:: VKeyword -> VCipher -> VPlain
-vDecode (VKeyword []) (VCipher cipher)  = VPlain cipher
-vDecode (VKeyword key) (VCipher cipher) = VPlain (vEncode' key cipher)
-  where
-    vEncode' _      []     = []
-    vEncode' []     cipher' = vEncode' key cipher'
-    vEncode' (k:ks) (c:cs) = (ceaserShift (negate $ ord k) c):(vEncode' ks cs)
+printExpr :: Expr -> String
+printExpr (Lit a) = show a      -- show to convert int to string
+printExpr (Add a b) = printExpr a ++ "+" ++ printExpr b
