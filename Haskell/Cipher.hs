@@ -29,3 +29,15 @@ cipher encryptOrDecrypt (x:xa) count = encode encryptOrDecrypt x count : cipher 
 
 
 -- Chapter 11 Exercise
+
+charPosition :: Char -> Int
+charPosition character = position
+    where 
+        position = head output
+        putStrLn ("Its Here")
+        output = [n | (l, n) <- zip ['a'..'z'] [1..], l == character]
+
+vigenèreCipher :: Cipher -> [Char] -> [Char] -> [Char]
+vigenèreCipher _ [] _ = []
+vigenèreCipher _ input [] = input
+vigenèreCipher encryptOrDecrypt (x:xa) (y:ya) = encode encryptOrDecrypt x (charPosition y) : vigenèreCipher encryptOrDecrypt xa ya
