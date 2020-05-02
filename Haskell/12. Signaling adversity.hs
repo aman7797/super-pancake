@@ -113,3 +113,8 @@ flipMaybe (Just x:xs) =
    case flipMaybe xs of
     Nothing -> Nothing
     Just ys -> Just (x:ys)
+
+lefts' :: [Either a b] -> [a]
+lefts' = foldr (\x acc -> case x of
+                            Left a  -> a:acc
+                            Right _ -> acc) []
