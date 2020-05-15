@@ -1,5 +1,20 @@
-import Data.Monoid
-import Data.Maybe
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
+-- import Data.Optional
+import Prelude
+import Data.String (IsString)
+
+newtype Name = Name { getName :: String } deriving (IsString)
+
+greet :: Optional Name -> String
+greet (Specific name) = "Hello, " ++ getName name
+greet  Default        = "Hello"
+
+newtype Age = Age { getAge :: Int } deriving (Num)
+
+birthday :: Optional Age -> String
+birthday (Specific age) = "You are " ++ show (getAge age) ++ " years old!"
+birthday  Default       = "You are one year older!"
 
 -- Madness
 type Verb = String
@@ -26,11 +41,18 @@ madlibbinBetter' :: Exclamation
                  -> String
 madlibbinBetter' e adv noun adj = mconcat [ e, "! he said ", adv, " as he jummped into his car ", noun, " and drove off with his ", adj, " wife."]
 
-newtype First' a = First' { getFirst' :: Optional a } deriving (Eq, Show)
+data Trivial = Trivial deriving (Eq, Show)
 
-instance Monoid (First' a) where
-    mempty = First' { getFirst' = Nothing }
-    mappend (First' a) (First' a')= First' { getFirst' = mappend a a'}
+instance Semigroup Trivial where
+    _ <> _ = undefined
 
-firstMappend :: First' a -> First' a -> First' a
-firstMappend a b = mappend a b
+instance Arbitrary Trivial where
+    arbitrary = return Trivial
+
+semigroupAssoc :: (Eq m, Semigroup m) => m -> m -> m -> Bool
+semigroupAssoc a b c = (a <> (b <> c)) == ((a <> b) <> c)
+
+type TrivialAssoc = Trivial -> Trivial -> Trivial -> Bool
+
+main :: IO ()
+main = quickCheck (semigroupAssoc :: TrivialAssoc)
