@@ -1,4 +1,9 @@
+{-# LANGUAGE InstanceSigs #-}
+
 import Data.List (elemIndex)
+import Test.QuickCheck
+-- import Test.QuickCheck.Checkers
+-- import Test.QuickCheck.Classes
 
 -- Exercise: Lookups
 -- 1
@@ -40,7 +45,7 @@ y4 = lookup 2 $ zip xs ys
 summed :: Maybe Integer
 summed = sum <$> ((,) <$> x4 <*> y4)
 
-
+-- Identity Instance
 newtype Identity a = Identity a deriving (Eq, Ord, Show)
 
 instance Functor Identity where
@@ -48,14 +53,43 @@ instance Functor Identity where
 
 instance Applicative Identity where
     pure = Identity
-    (<*>) = undefined
+    Identity f <*> Identity a = Identity (f a)
 
-
+-- Constant Instance
 newtype Constant a b = Constant { getConstant :: a } deriving (Eq, Ord, Show)
 
 instance Functor (Constant a) where
-    fmap =undefined
+    fmap _ (Constant a) = Constant a
 
 instance Monoid a => Applicative (Constant a) where
-    pure = undefined
-    (<*>) = undefined
+  pure a = Constant mempty
+  (<*>) :: Constant a (x -> y) -> Constant a x -> Constant a y
+  (Constant x) <*> (Constant y) = Constant $ x `mappend` y
+
+-- List Applicative Exercise
+data List a = Nil | Cons a (List a) deriving (Eq, Show)
+
+instance Functor List where
+    fmap _ Nil = Nil
+    fmap f (Cons a listObj) = Cons (f a) (fmap f listObj)
+
+instance Applicative List where
+    pure a = Cons a Nil
+    (<*>) _ Nil = Nil
+    (<*>) Nil _ = Nil
+    (<*>) a b = flatMap (\x -> x <$> b) a
+
+
+append :: List a -> List a -> List a
+append Nil ys = ys
+append (Cons x xs) ys = Cons x $ xs `append` ys
+
+fold :: (a -> b -> b) -> b -> List a -> b
+fold _ b Nil = b
+fold f b (Cons h t) = f h (fold f b t)
+
+concat' :: List (List a) -> List a
+concat' = fold append Nil
+
+flatMap :: (a -> List b) -> List a -> List b
+flatMap f as = concat' $ f <$> as
