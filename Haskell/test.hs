@@ -93,3 +93,27 @@ concat' = fold append Nil
 
 flatMap :: (a -> List b) -> List a -> List b
 flatMap f as = concat' $ f <$> as
+
+
+take' :: Int -> List a -> List a
+take' _ Nil = Nil
+take' count (Cons x xa)
+    | count > 0     = (Cons x Nil) `append` (take' (i-1) xa)
+    | otherwise     = Nil
+
+newtype ZipList' a = ZipList' (List a) deriving (Eq, Show)
+
+instance Eq a => EqProp (ZipList' a) where
+    xs =-= ys = xs' `eq` ys' where 
+        xs' = let (ZipList' l) = xs 
+            in take' 3000 l
+        ys' = let (ZipList' l) = ys
+            in take' 3000 l
+
+instance Functor ZipList' where
+    fmap f (ZipList' xs) = ZipList' $ fmap f xs
+
+instance Applicative ZipList' where
+    pure = undefined
+    (<*>) = undefined
+    
